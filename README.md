@@ -13,3 +13,6 @@ migration and troubleshooting. This repository contains documentation only.
 Version 1.3.0 targets Unreal Engine 5.4 through 5.8 on Win64.
 
 [Support](https://discord.com/invite/GKjSWjvEnm)
+
+> [!NOTE]
+> If Map Graph helps your project, consider an honest review on the **[Map Graph Fab listing](https://www.fab.com/listings/324291e4-7a97-401b-9926-6122c6ef09f2)**.

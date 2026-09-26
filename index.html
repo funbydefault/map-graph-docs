@@ -352,6 +352,11 @@
       font-weight: 850;
     }
 
+    .table-scroll { max-width: 100%; overflow-x: auto; }
+
+    .review-callout { margin-top: 2rem; padding: 1.3rem; border: 1px solid #356391; border-radius: 1rem; background: #15253b; }
+    .review-callout a { display: inline-block; margin: .3rem; padding: .45rem .9rem; border-radius: 99px; background: #215fac; color: white; font-weight: 700; text-decoration: none; }
+
     table {
       width: 100%;
       margin: 1rem 0;
@@ -703,7 +708,7 @@
           release threshold before moving again; holding it does not repeat across the map.
         </p>
 
-        <table>
+        <div class="table-scroll"><table>
           <thead>
             <tr>
               <th>Action</th>
@@ -771,7 +776,7 @@
               <td>Tap <strong>Restart Route</strong></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <p>
           The playable harness hides seed controls by default. Enable
@@ -815,7 +820,7 @@
           seed, stores it in the generated graph, and exposes it to the caller or visible Seed field.
         </p>
 
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Entry point</th><th>Result</th></tr></thead>
           <tbody>
             <tr>
@@ -839,7 +844,7 @@
               <td>Returns a nonzero <code>int32</code> for a custom generation or persistence flow.</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="callout gold">
           <strong>A seed is not the whole generation contract.</strong>
@@ -899,7 +904,7 @@
           a title bar, footer or side panel. It scrolls along either axis as focus moves.
           <strong>Classic</strong> uses colored medallions and fits the graph into the available space.
           Preset buttons replace the style values and keep your tag overrides.</p>
-        <table><thead><tr><th>Change</th><th>Setting</th></tr></thead><tbody>
+        <div class="table-scroll"><table><thead><tr><th>Change</th><th>Setting</th></tr></thead><tbody>
           <tr><td>Background artwork</td><td>Set <code>BackgroundBrush</code> to a texture or UI material. Set <code>BackgroundTint</code> to white to preserve its colors. Disable <code>bShowPaperDecoration</code> to remove the built-in frame and grain.</td></tr>
           <tr><td>Node artwork</td><td>The eight example <code>MGN_*</code> node types each have an editable <code>Icon</code> texture. Replace that texture to change a category's symbol; edit <code>Color</code> when <code>bUseNodeTypeColors</code> is enabled. For tag-specific art, set <code>IconBrush</code> in <code>NodeVisualsByTag</code>; the theme brush takes priority over the node type icon. <code>IconTint</code> tints either artwork source, with white preserving its original colors. Enable <code>bUseGlyphInsteadOfNodeIcon</code> to use the built-in vector glyph instead.</td></tr>
           <tr><td>Markers and routes</td><td>Edit <code>MarkerStyle</code>, <code>GlyphScale</code>, <code>NodeDiameter</code>, <code>RowSpacing</code>, <code>ColumnSpacing</code>, <code>NodeJitter</code>, route colors, thickness, dash length and gap. Choose <code>RouteShape = Straight</code> for direct links. <code>bAutoScaleNodes</code> shrinks drawings when rows or columns get close together. <code>MinimumHitDiameter</code> keeps touch targets large even with small symbols. <code>bAutoFitNodeLabels</code> keeps crowded vertical maps readable by placing the focused label beneath its node and hiding other labels that cannot fit.</td></tr>
@@ -912,7 +917,7 @@
           <tr><td>Player-facing details</td><td>Turn <code>bShowScreenChrome</code> off for a full-screen game map. Placeholder mode has no stat bar; the optional encounter mode shows supplies during encounters. Turn <code>bShowGenerationSummary</code> off to remove node counts and seed from a visible footer. Inspector, legend, floor guides and labels have separate visibility settings.</td></tr>
           <tr><td>Selection and travel</td><td><code>SelectionHoldDuration</code> sets the selected-node hold in seconds, default 0.42. <code>TransitionFadeDuration</code> sets each fade around travel, default 0.18 seconds. Disable the widget's <code>bAnimateNodeTravel</code> for instant travel or reduced motion.</td></tr>
           <tr><td>UI sounds</td><td>Assign <code>NodeHoverSound</code>, <code>NodeSelectSound</code>, <code>TransitionSound</code> and <code>ReturnSound</code> in the theme's Style. Unset references are silent. The widget's <code>bEnableUISounds</code> toggles playback; <code>UISoundVolume</code> sets its level from 0 to 1, default 0.8.</td></tr>
-        </tbody></table>
+        </tbody></table></div>
         <p>At runtime, call <code>Set Presentation Theme</code>, <code>Set Presentation Style</code>, or
           <code>Apply Style Preset</code> on the widget. These refresh the screen without changing the graph,
           current route, focused node or pending seed. If you edit style properties, a theme, or node-type
@@ -984,7 +989,7 @@
         </p>
 
         <h3 id="widget">Widget settings and extension points</h3>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Property</th><th>Purpose</th></tr></thead>
           <tbody>
             <tr><td><code>Rules</code></td><td>Rules used by generation controls and automatic initial generation. Leave unset to use Project Settings &gt; Game &gt; Map Graph Settings &gt; Default Rules. An explicitly assigned asset must load successfully.</td></tr>
@@ -1003,7 +1008,7 @@
             <tr><td><code>bAllowMouseDragScrolling</code></td><td>Enables left-drag on empty paper and middle-drag anywhere on a scrolling map. Enabled by default.</td></tr>
             <tr><td><code>InputBindings</code></td><td>Replaces keyboard/gamepad key arrays, analog axes and thresholds, and the -/+ seed adjustment step.</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <p>Callable widget functions include:</p>
         <ul>
@@ -1233,7 +1238,7 @@
           successful widget regeneration reset both the route and demo run. Defeat offers a fresh run;
           defeating the boss offers <strong>Start a new run</strong> or <strong>View completed route</strong>.
           Starting again resets supplies and encounters on the same map.</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Encounter</th><th>Example behavior</th></tr></thead>
           <tbody>
             <tr><td>Start</td><td>Choose starting gold or an attack upgrade.</td></tr>
@@ -1243,7 +1248,7 @@
             <tr><td>Rest</td><td>Recover health or improve attack damage.</td></tr>
             <tr><td>Treasure</td><td>Choose gold or healing supplies.</td></tr>
           </tbody>
-        </table>
+        </table></div>
         <p>Choices show the health they can actually restore and the damage the enemy will return after
           each combat action. A finishing blow prevents that response. Unavailable choices explain what
           is missing, and results show the actual signed changes to health, gold and attack damage.</p>
@@ -1460,7 +1465,7 @@ if (MapScreen)
 
       <section id="migration">
         <h2>Migration and backward compatibility</h2>
-        <table>
+        <div class="table-scroll"><table>
           <thead>
             <tr>
               <th>From</th>
@@ -1493,7 +1498,7 @@ if (MapScreen)
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <h3>1.2.0 to 1.3.0</h3>
         <p>The generator identity version remains unchanged. Unchanged rules and inputs reproduce
@@ -1623,14 +1628,14 @@ if (MapScreen)
           path through <code>-Rules</code>.
         </p>
 
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Exit code</th><th>Meaning</th></tr></thead>
           <tbody>
             <tr><td>0</td><td>Every requested contract passed.</td></tr>
             <tr><td>1</td><td>Invocation or setup error.</td></tr>
             <tr><td>2</td><td>One or more contract assertions failed.</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <p>The commandlet emits a machine-readable summary:</p>
         <pre><code>MAPGRAPH_TEST_SUMMARY schema=1 suite=... cases=... assertions=... failures=... setup_errors=... count=... fingerprint=...</code></pre>
@@ -1748,6 +1753,9 @@ if (MapScreen)
           integration issue.
         </p>
       </section>
+      <aside class="review-callout" aria-label="Optional review invitation">
+        If Map Graph helps your project, consider an honest review on the <a href="https://www.fab.com/listings/324291e4-7a97-401b-9926-6122c6ef09f2"><strong>Map Graph Fab listing</strong></a>.
+      </aside>
     </article>
   </main>
 
