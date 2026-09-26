@@ -1,0 +1,1760 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Map Graph 1.3.0 - Customer Guide</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #111116;
+      --night-2: #18171b;
+      --panel: #211f21;
+      --panel-raised: #292526;
+      --paper: #e8d0a0;
+      --paper-soft: #c9a86f;
+      --ink: #211811;
+      --text: #f4ead7;
+      --muted: #c7b9a4;
+      --line: #51463c;
+      --gold: #e7a33e;
+      --gold-soft: #49341d;
+      --route: #55c5ae;
+      --route-soft: #183d39;
+      --danger: #f08b80;
+      --danger-soft: #482522;
+      --code: #111012;
+      --shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 1.5rem;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 88% -8%, rgba(147, 46, 52, 0.22), transparent 28rem),
+        radial-gradient(circle at 12% 10%, rgba(231, 163, 62, 0.08), transparent 24rem),
+        var(--night);
+      font: 16px/1.68 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: #7ee0ca;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--route);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    code, pre, kbd {
+      font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    code {
+      padding: 0.1rem 0.34rem;
+      border: 1px solid var(--line);
+      border-radius: 0.35rem;
+      background: var(--code);
+      color: #ffe5b5;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+
+    kbd {
+      display: inline-block;
+      min-width: 1.8em;
+      padding: 0.12rem 0.38rem;
+      border: 1px solid #746454;
+      border-bottom-width: 3px;
+      border-radius: 0.36rem;
+      background: #302a27;
+      color: #fff6e7;
+      font-size: 0.82em;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 1rem 0;
+      padding: 1.1rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      background: var(--code);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+      line-height: 1.5;
+    }
+
+    pre code {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #f5e3c3;
+      overflow-wrap: normal;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(3.5rem, 9vw, 7rem) 1.5rem 3.5rem;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(115deg, rgba(17, 17, 22, 0.88), rgba(40, 24, 24, 0.82)),
+        repeating-linear-gradient(105deg, transparent 0 38px, rgba(232, 208, 160, 0.028) 39px 40px);
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      right: -7rem;
+      bottom: -11rem;
+      width: 31rem;
+      height: 31rem;
+      border: 2px dashed rgba(231, 163, 62, 0.18);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 4rem rgba(231, 163, 62, 0.025),
+        0 0 0 8rem rgba(85, 197, 174, 0.018);
+      pointer-events: none;
+    }
+
+    header .inner, main, footer {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.55rem;
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      line-height: 1.18;
+      text-wrap: balance;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6.25rem);
+      letter-spacing: -0.052em;
+    }
+
+    h2 {
+      margin: 0 0 0.85rem;
+      color: #fff2dc;
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin: 1.8rem 0 0.45rem;
+      color: #f3d59f;
+      font-size: 1.22rem;
+    }
+
+    h4 {
+      margin: 1.3rem 0 0.35rem;
+      color: #e8d5b7;
+      font-size: 1rem;
+    }
+
+    p { margin: 0.75rem 0; }
+
+    .lede {
+      max-width: 800px;
+      margin: 1rem 0 0;
+      color: #d9cbb8;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.55rem;
+    }
+
+    .badge {
+      padding: 0.35rem 0.68rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(33, 31, 33, 0.88);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .badge.good {
+      border-color: #397f71;
+      background: var(--route-soft);
+      color: #a9f4e2;
+    }
+
+    .badge.gold {
+      border-color: #8c6838;
+      background: var(--gold-soft);
+      color: #ffd99c;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 2rem;
+      padding: 2.25rem 1.5rem 4.5rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 1rem;
+      align-self: start;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+      padding: 1rem 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(33, 31, 33, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: #fff0d4;
+    }
+
+    nav a {
+      display: block;
+      padding: 0.25rem 0;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    nav a:hover { color: #8ee7d2; }
+    nav .minor { padding-left: 0.7rem; font-size: 0.9rem; }
+
+    article { min-width: 0; }
+
+    section {
+      margin-bottom: 1.45rem;
+      padding: clamp(1.25rem, 3.5vw, 2.2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(41, 37, 38, 0.9), rgba(27, 26, 29, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-grid, .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .hero-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 0.8rem;
+      background: var(--panel-raised);
+    }
+
+    .card .number {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--gold);
+      font-size: 1.7rem;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .card h3 {
+      margin: 0 0 0.4rem;
+      color: #ffe6ba;
+    }
+
+    .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+    .callout {
+      margin: 1rem 0;
+      padding: 0.9rem 1rem;
+      border-left: 4px solid var(--route);
+      border-radius: 0.4rem;
+      background: var(--route-soft);
+    }
+
+    .callout.gold {
+      border-left-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 0.18rem;
+      color: #fff0d0;
+    }
+
+    .steps {
+      margin: 1rem 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps > li {
+      position: relative;
+      min-height: 3rem;
+      margin: 0 0 0.75rem;
+      padding: 0.78rem 0.9rem 0.78rem 3.6rem;
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      background: var(--panel-raised);
+      counter-increment: steps;
+    }
+
+    .steps > li::before {
+      content: counter(steps);
+      position: absolute;
+      top: 0.62rem;
+      left: 0.8rem;
+      display: grid;
+      width: 2rem;
+      height: 2rem;
+      place-items: center;
+      border: 1px solid #9f7134;
+      border-radius: 50%;
+      background: var(--gold-soft);
+      color: #ffdca3;
+      font-weight: 850;
+    }
+
+    table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th, td {
+      padding: 0.72rem;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #332d2a;
+      color: #ffe6ba;
+    }
+
+    tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.018); }
+    ul, ol { padding-left: 1.35rem; }
+    li + li { margin-top: 0.35rem; }
+    dt { margin-top: 0.8rem; color: #f3d59f; font-weight: 750; }
+    dd { margin: 0.2rem 0 0 1.1rem; }
+
+    .path {
+      display: block;
+      margin: 0.65rem 0;
+      padding: 0.7rem 0.85rem;
+      border: 1px dashed #715f4d;
+      border-radius: 0.6rem;
+      background: rgba(17, 16, 18, 0.55);
+      color: #f2d9ad;
+      font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+
+    details {
+      margin: 0.8rem 0;
+      border: 1px solid var(--line);
+      border-radius: 0.7rem;
+      background: rgba(17, 16, 18, 0.35);
+    }
+
+    summary {
+      padding: 0.8rem 0.95rem;
+      color: #f4dab0;
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    details > div { padding: 0 0.95rem 0.95rem; }
+
+    footer {
+      padding: 0 1.5rem 3rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 940px) {
+      main { grid-template-columns: 1fr; }
+      nav { position: static; max-height: none; }
+      nav a { display: inline-block; margin-right: 0.8rem; }
+      nav .minor { padding-left: 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+      header { padding-left: 1rem; padding-right: 1rem; }
+      main { padding-left: 1rem; padding-right: 1rem; }
+      section { padding: 1.1rem; }
+      th, td { padding: 0.55rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      :root {
+        color-scheme: light;
+        --night: #fff;
+        --night-2: #fff;
+        --panel: #fff;
+        --panel-raised: #f5f1e9;
+        --text: #18130f;
+        --muted: #51483d;
+        --line: #b7aa98;
+        --gold: #77500e;
+        --gold-soft: #fff3d6;
+        --route: #176b5e;
+        --route-soft: #e5f5f1;
+        --danger: #8b2923;
+        --danger-soft: #ffe8e5;
+        --code: #f2eee8;
+        --shadow: none;
+      }
+
+      body, header {
+        background: #fff;
+        color: var(--text);
+      }
+
+      a,
+      h1,
+      h2,
+      h3,
+      h4,
+      .card h3,
+      .callout strong,
+      dt,
+      summary {
+        color: var(--text);
+      }
+      .lede,
+      footer {
+        color: var(--muted);
+      }
+      .badge,
+      .badge.good,
+      .badge.gold,
+      section,
+      .card,
+      .steps > li,
+      .path,
+      details {
+        background: #fff;
+        color: var(--text);
+        box-shadow: none;
+      }
+      .callout,
+      .callout.gold,
+      .callout.danger {
+        color: var(--text);
+      }
+      .badge.good,
+      .callout {
+        background: var(--route-soft);
+      }
+      .badge.gold,
+      .callout.gold,
+      .steps > li::before {
+        background: var(--gold-soft);
+        color: var(--text);
+      }
+      .callout.danger {
+        background: var(--danger-soft);
+      }
+      th {
+        background: #e9e2d8;
+        color: var(--text);
+      }
+      tbody tr:nth-child(even) {
+        background: #f8f5f0;
+      }
+
+      header { padding: 1rem 0 1.4rem; }
+      header::after, nav { display: none; }
+      main { display: block; padding: 1rem 0; }
+      section { break-inside: auto; }
+      h2, h3, h4 { break-after: avoid; }
+      .card, .callout, table, details { break-inside: avoid; }
+      pre {
+        overflow: visible;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      pre code { white-space: inherit; color: #251b11; }
+      code { color: #251b11; }
+      a { color: inherit; text-decoration: none; }
+      footer { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <p class="eyebrow">Customer guide &middot; Version 1.3.0</p>
+      <h1>Map Graph</h1>
+      <p class="lede">
+        Generate deterministic branching progression maps, present them through a polished
+        input-complete runtime screen, and keep game-specific encounters and consequences in your own code.
+      </p>
+      <div class="badges" aria-label="Package facts">
+        <span class="badge gold">Package 1.3.0</span>
+        <span class="badge">GenerationVersion 1</span>
+        <span class="badge good">Runtime + Editor modules</span>
+        <span class="badge good">Mouse, keyboard, controller, touch</span>
+        <span class="badge">UE 5.4&ndash;5.8 / Win64</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav aria-label="Guide contents">
+      <strong>Contents</strong>
+      <a href="#overview">What is included</a>
+      <a href="#quick-start">Five-minute start</a>
+      <a class="minor" href="#controls">Controls</a>
+      <a class="minor" href="#random-seeds">Seeds and Random</a>
+      <a href="#customize">Make it yours</a>
+      <a class="minor" href="#theme">Theme asset</a>
+      <a class="minor" href="#widget">Runtime widget</a>
+      <a href="#authoring">Rules and node types</a>
+      <a class="minor" href="#edges">Edge policy</a>
+      <a class="minor" href="#quotas">Tag quotas</a>
+      <a href="#blueprints">Blueprint workflow</a>
+      <a href="#encounter-integration">Encounter integration</a>
+      <a class="minor" href="#demo-profile">Encounter balance</a>
+      <a href="#cpp">C++ workflow</a>
+      <a href="#events">Subsystem and events</a>
+      <a href="#persistence">Persistence</a>
+      <a href="#migration">Migration</a>
+      <a href="#performance">Performance and scope</a>
+      <a href="#validation">Headless validation</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#support">Support</a>
+    </nav>
+
+    <article>
+      <section id="quick-start">
+        <h2>Editor and Blueprint quickstart</h2>
+        <p>Install the matching engine version from Fab, enable <strong>Map Graph</strong> in
+          <strong>Edit &gt; Plugins</strong>, and restart when requested. A Blueprint-only project
+          can use the installed plugin without adding a C++ project module.</p>
+        <ol class="steps">
+          <li>In your project's Content folder, create a <strong>Data Asset</strong> with class
+            <strong>MapGraphNodeType</strong>. Set its display name, tags, optional icon and weight.
+            Create a few types for your game's destinations.</li>
+          <li>Create a <strong>MapGraphRules</strong> Data Asset. Assign start and end types,
+            add your other types to <strong>Default Types</strong>, and configure the row layouts.
+            Leave the edge policy defaults for your first connected map.</li>
+          <li>Create a <strong>MapGraphPresentationTheme</strong> Data Asset. Click a preset button,
+            then choose colors, icons, route shape and spacing.</li>
+          <li>Create a Blueprint derived from <strong>MapGraphGameMode</strong>. In Class Defaults,
+            assign <strong>Harness Rules</strong> and <strong>Harness Presentation Theme</strong>.
+            Set <strong>Harness Widget Class</strong> to <strong>MapGraphWidget</strong> for map-only UI,
+            or <strong>MapGraphDemoWidget</strong> for the destination placeholder and return flow.</li>
+          <li>Open your level's <strong>World Settings</strong>, choose that Blueprint as
+            <strong>GameMode Override</strong>, save, and press <strong>Play</strong>.
+            Confirm that reachable nodes advance the route and that restarting restores the start.</li>
+        </ol>
+        <p>Keep your rules, themes and Blueprints in project Content. Plugin updates can then replace
+          plugin-owned examples without overwriting your customizations. Set your own level as both
+          <strong>Editor Startup Map</strong> and <strong>Game Default Map</strong> in
+          <strong>Project Settings &gt; Maps &amp; Modes</strong> before packaging.</p>
+        <h3>Use your existing GameMode or HUD</h3>
+        <p>Create a Widget Blueprint derived from <strong>MapGraphWidget</strong> or
+          <strong>MapGraphDemoWidget</strong>, assign its Rules and Presentation Theme in Class Defaults,
+          and use <strong>Create Widget &gt; Add to Viewport</strong> in your existing UI flow.
+          Set Game-and-UI input mode with the widget as focus and show the mouse cursor.
+          Bind <strong>On Node Advanced</strong> to your gameplay entry point; it fires after a valid
+          travel commits. The Blueprint workflows below describe graph ownership and route events.</p>
+        <h3>Validate rules in the Editor</h3>
+        <p>Open <strong>Window &gt; Map Graph Viewer</strong>, select your rules, enter a seed and choose
+          <strong>Generate</strong>. <strong>Generate Random</strong> displays the seed it used.
+          Invalid rules explain the problem and preserve the previous preview. This viewer inspects
+          data in the Editor; use the runtime widget in your game.</p>
+      </section>
+
+      <section id="overview">
+        <h2>A complete graph core with a replaceable presentation</h2>
+        <p>
+          Map Graph is a native Unreal Engine code plugin for layered, directed progression maps.
+          Its generator turns Data Asset rules and a seed into graph data. Its navigator validates
+          movement through unlocked edges. The plugin provides a configurable native runtime
+          presentation so the included example is immediately interactive while the underlying
+          graph remains usable from any project UI.
+        </p>
+
+        <div class="hero-grid">
+          <div class="card">
+            <span class="number">01</span>
+            <h3>Generate</h3>
+            <p>Author rows, node pools, fan-out, route extras, and Gameplay Tag quotas as reusable assets.</p>
+          </div>
+          <div class="card">
+            <span class="number">02</span>
+            <h3>Explore</h3>
+            <p>Inspect routes and advance through reachable nodes with mouse, keyboard, controller, or touch.</p>
+          </div>
+          <div class="card">
+            <span class="number">03</span>
+            <h3>Integrate</h3>
+            <p>Use the Game Instance subsystem, Blueprint helpers, delegates, or direct C++ APIs.</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Runtime module: <code>MapGraph</code></h3>
+            <ul>
+              <li>Seeded generator, graph data, queries, and navigator</li>
+              <li><code>UMapGraphSubsystem</code> for shared graph and route state</li>
+              <li><code>UMapGraphWidget</code> native responsive presentation</li>
+              <li><code>UMapGraphPresentationTheme</code> styling Data Asset</li>
+              <li><code>UMapGraphDemoWidget</code> and <code>UMapGraphDemoProfile</code> for a replaceable encounter example</li>
+              <li>Blueprint function library and layout helpers</li>
+              <li>No-Tick example GameMode harness</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Editor module: <code>MapGraphEditor</code></h3>
+            <ul>
+              <li>Dockable Map Graph Viewer</li>
+              <li>Entered-seed and random-seed preview generation</li>
+              <li>Editor-only <code>MapGraphTest</code> commandlet</li>
+              <li>No runtime dependency on the Editor module</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>
+          Editable rules, node types, and a self-contained example map live
+          under <code>/MapGraph/Example</code>. The native screen has its own vector-glyph fallback and
+          does not require external fonts, images, UI packs, or host-project content.
+        </p>
+
+        <div class="callout gold">
+          <strong>Compatibility boundary</strong>
+          Version 1.3.0 supports Unreal Engine 5.4, 5.5, 5.6, 5.7, and 5.8 on Win64.
+          Use the package that matches your engine version. Other engine versions, platforms, and
+          toolchains are not covered by this release.
+        </div>
+      </section>
+
+
+
+      <section id="controls">
+        <h2>Input and route interaction</h2>
+        <p>
+          The native screen uses one spatial focus model for every device. Moving focus updates the
+          inspector. Confirming an unavailable future node does not travel; it shows an explanation.
+          By default, future nodes may be inspected while travel remains restricted to reachable nodes.
+        </p>
+        <p>
+          The mappings below are the defaults. <code>InputBindings</code> exposes keyboard and gamepad
+          key arrays, analog axes and actuation/release thresholds, and the seed adjustment step without
+          requiring plugin edits. Mouse and touch remain direct interactions with visible markers and
+          controls. The stable behavior IDs are <code>inspect-node</code>, <code>travel-to-node</code>,
+          <code>edit-seed</code>, <code>generate-from-seed</code>, <code>generate-random</code>,
+          <code>restart-route</code>, and <code>switch-style</code>.
+        </p>
+        <p>
+          The left stick moves focus one node per deflection. Return the stick inside the configured
+          release threshold before moving again; holding it does not repeat across the map.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Mouse</th>
+              <th>Keyboard</th>
+              <th>Controller</th>
+              <th>Touch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Inspect a node</td>
+              <td>Hover</td>
+              <td><kbd>Arrow keys</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></td>
+              <td>D-pad or left stick</td>
+              <td>Tap any marker; unavailable markers inspect without travelling</td>
+            </tr>
+            <tr>
+              <td>Travel to a reachable node</td>
+              <td>Left-click a reachable node</td>
+              <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
+              <td>Bottom face button (A on an Xbox-style layout)</td>
+              <td>Tap a reachable marker; dragging cancels the tap</td>
+            </tr>
+            <tr>
+              <td>Explore a scrolling map</td>
+              <td>Mouse wheel; left-drag empty paper or middle-drag anywhere on the map</td>
+              <td>Move node focus; the focused row scrolls into view</td>
+              <td>D-pad or left stick; the focused row scrolls into view</td>
+              <td>Drag the map without activating a node</td>
+            </tr>
+            <tr>
+              <td>Switch visual preset</td>
+              <td>Style preview button</td>
+              <td><kbd>T</kbd></td>
+              <td>View button</td>
+              <td>Tap the style preview button</td>
+            </tr>
+            <tr>
+              <td>Edit the displayed seed</td>
+              <td>Type in the Seed field or use <strong>-</strong>/<strong>+</strong></td>
+              <td>Focus the Seed field and type a value</td>
+              <td>Left/right shoulder buttons decrement/increment</td>
+              <td>Tap <strong>-</strong>/<strong>+</strong>, or use the platform text entry for the Seed field</td>
+            </tr>
+            <tr>
+              <td>Generate from displayed seed</td>
+              <td><strong>Generate Seed</strong> button</td>
+              <td><kbd>G</kbd></td>
+              <td>Left face button (X on an Xbox-style layout)</td>
+              <td>Tap <strong>Generate Seed</strong></td>
+            </tr>
+            <tr>
+              <td>Generate a random seed</td>
+              <td><strong>Generate Random</strong> button</td>
+              <td><kbd>R</kbd></td>
+              <td>Top face button (Y on an Xbox-style layout)</td>
+              <td>Tap <strong>Generate Random</strong></td>
+            </tr>
+            <tr>
+              <td>Restart the route</td>
+              <td><strong>Restart Route</strong> button</td>
+              <td><kbd>Home</kbd></td>
+              <td>Menu/Start button</td>
+              <td>Tap <strong>Restart Route</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          The playable harness hides seed controls by default. Enable
+          <code>AMapGraphGameMode.bShowGenerationControls</code> when you want the visible seed editor;
+          generation shortcuts remain available while map input is active. Scroll behavior requires
+          the style's <code>bScrollToFitRows</code>; style preview requires <code>bShowStyleSwitcher</code>.
+          Mouse dragging is enabled by default; turn off the widget's <code>bAllowMouseDragScrolling</code>
+          to reserve those mouse gestures for your own interface. A drag does not activate a node.
+        </p>
+        <p>
+          When visible, the footer help switches between mouse, keyboard, gamepad, and touch wording as
+          the active input changes. Touch travel requires a same-marker press and release within the
+          platform drag threshold; secondary touches, drags, capture loss, or a graph change cancel the
+          activation. The widget restores map focus after generation, route advancement, and restart so
+          directional navigation can continue.
+        </p>
+        <p>
+          The Seed field is a pending value shared by every input path. Typing, spinning, tapping
+          <strong>-</strong>/<strong>+</strong>, or using the controller shoulder buttons updates that
+          same value; the Generate Seed button, <kbd>G</kbd>, and the controller left face button all
+          generate from it. A successful generation replaces the field with the graph's actual seed.
+        </p>
+        <p>
+          Pointer hit testing uses the presentation style's <code>MinimumHitDiameter</code>, which defaults
+          to 64 pixels. Keep it at least 48 pixels when adapting the theme for touch targets.
+        </p>
+
+        <div class="callout">
+          <strong>Project-controlled travel is supported.</strong>
+          Set <code>bAdvanceImmediatelyOnConfirm</code> to false. The widget will validate that a node is
+          reachable and broadcast <code>OnNodeActivated</code>, but your project decides when to call
+          <code>AdvanceTo</code>. This is useful when travel first opens a confirmation, encounter, or
+          transition screen.
+        </div>
+      </section>
+
+      <section id="random-seeds">
+        <h2>Reproducible seeds and Generate Random</h2>
+        <p>
+          A random layout is still reproducible. Every random-generation entry point creates a nonzero
+          seed, stores it in the generated graph, and exposes it to the caller or visible Seed field.
+        </p>
+
+        <table>
+          <thead><tr><th>Entry point</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Editor Viewer &gt; <strong>Generate Random</strong></td>
+              <td>Updates the Seed field and generates the preview.</td>
+            </tr>
+            <tr>
+              <td><code>UMapGraphWidget::GenerateRandom</code></td>
+              <td>Displays the seed, resets presentation to the new graph, and broadcasts <code>OnGraphGenerated</code>.</td>
+            </tr>
+            <tr>
+              <td><code>UMapGraphSubsystem::GenerateRandom</code></td>
+              <td>Adopts the new graph, initializes navigation, and broadcasts subsystem change events.</td>
+            </tr>
+            <tr>
+              <td><code>UMapGraphBPLibrary::GenerateRandomActMap</code></td>
+              <td>Returns a transient graph; read <code>Graph-&gt;Seed</code> and retain the graph.</td>
+            </tr>
+            <tr>
+              <td><code>UMapGraphBPLibrary::CreateRandomSeed</code></td>
+              <td>Returns a nonzero <code>int32</code> for a custom generation or persistence flow.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout gold">
+          <strong>A seed is not the whole generation contract.</strong>
+          Reproduction also requires the same <code>GenerationVersion</code>, rules asset path and values,
+          referenced node-type data, and plugin generation behavior. Save those dependencies or store a
+          full project-owned graph payload when a layout must survive rule edits and upgrades.
+        </div>
+
+        <p>
+          In the Blueprint convenience and subsystem APIs, seed 0 means
+          <code>MapGraphSettings.DefaultSeed</code>. Use <code>UMapGraphGenerator::GenerateGraph</code>
+          directly when zero must be treated as a literal seed.
+        </p>
+      </section>
+
+      <section id="customize">
+        <h2>Make the presentation yours</h2>
+        <p>
+          <code>UMapGraphWidget</code> is a <code>UUserWidget</code> backed by a native Slate presentation.
+          You can use it unchanged, subclass it in Blueprint, configure it per instance, supply a reusable
+          theme asset, or replace it while continuing to use the same subsystem and graph APIs.
+        </p>
+
+        <h3>Build a collection of examples</h3>
+        <p><code>UMapGraphShowcaseWidget</code> adds a compact selector to <code>UMapGraphDemoWidget</code>.
+          Keyboard keys 1â€“5 select the included examples directly; Page Up / Page Down or gamepad
+          left / right shoulder cycle through them. Tap a numbered button on touch screens.
+          D-pad or left stick inspect nodes, and the bottom face button enters a reachable node
+          or returns from its destination. Touch supports marker taps, map swipes and destination buttons.
+          Reset and New are available as buttons, Home / R keys, and gamepad Menu / top face button.</p>
+        <p>Duplicate <code>MapGraphShowcaseProfile</code> and assign it to the showcase widget. An unassigned collection loads the bundled profile on first use; <code>GetShowcaseProfile</code> returns the active collection.
+          Each entry has a name, description, seed, <code>Rules</code> and <code>Theme</code>.
+          Add, remove or reorder entries; there is no fixed example count. Edit <code>ExampleKeys</code>,
+          <code>PreviousExampleKeys</code> and <code>NextExampleKeys</code> to remap switching.
+          Selecting another example begins a fresh route and cancels any previous selection animation.
+          Selecting the active example keeps its route. Hide the selector with <code>bShowExampleSelector</code>,
+          or use <code>UMapGraphDemoWidget</code> for a single journey without the selector.</p>
+
+        <h3>Quick setup for your game</h3>
+        <ol>
+          <li>Create a <code>MapGraphPresentationTheme</code> in your Content folder, apply a preset, then choose your background, route style and marker settings.</li>
+          <li>Create or duplicate <code>MapGraphNodeType</code> assets. Set each name, icon, tags and relative weight. Add as many categories as your game needs; the example's eight types are optional.</li>
+          <li>Create a <code>MapGraphRules</code> asset. Add your candidates to <code>DefaultTypes</code>, choose start/end types, and set rows, node counts, connection policy and optional per-floor pools.</li>
+          <li>Assign <code>Rules</code> and <code>PresentationTheme</code> on your map widget. With the supplied GameMode, use <code>HarnessRules</code> and <code>HarnessPresentationTheme</code>.</li>
+          <li>Open your gameplay from <code>OnNodeAdvanced</code> after travel commits. Use the included placeholder screen while connecting your game's room, battle or event flow.</li>
+        </ol>
+        <h3 id="theme">Presentation theme Data Asset</h3>
+        <p>Create a <strong>MapGraphPresentationTheme</strong> Data Asset in your own Content folder.
+          Open it and click <strong>Use Classic Preset</strong> or <strong>Use Parchment Preset</strong>
+          to start with an editable palette. You can also duplicate the included
+          <code>/MapGraph/Example/MapGraphParchmentTheme</code> asset.
+          Assign it to your widget's <code>PresentationTheme</code>.</p>
+        <p><strong>Parchment</strong> uses role-colored symbols, aligned floors, straight dotted
+          connections and a paper texture in the included theme. The example map,
+          <strong>The Ascent</strong>, uses this editable theme by default. Its example rules link only
+          the next floor and at most one centered lane sideways; the map fills the game screen without
+          a title bar, footer or side panel. It scrolls along either axis as focus moves.
+          <strong>Classic</strong> uses colored medallions and fits the graph into the available space.
+          Preset buttons replace the style values and keep your tag overrides.</p>
+        <table><thead><tr><th>Change</th><th>Setting</th></tr></thead><tbody>
+          <tr><td>Background artwork</td><td>Set <code>BackgroundBrush</code> to a texture or UI material. Set <code>BackgroundTint</code> to white to preserve its colors. Disable <code>bShowPaperDecoration</code> to remove the built-in frame and grain.</td></tr>
+          <tr><td>Node artwork</td><td>The eight example <code>MGN_*</code> node types each have an editable <code>Icon</code> texture. Replace that texture to change a category's symbol; edit <code>Color</code> when <code>bUseNodeTypeColors</code> is enabled. For tag-specific art, set <code>IconBrush</code> in <code>NodeVisualsByTag</code>; the theme brush takes priority over the node type icon. <code>IconTint</code> tints either artwork source, with white preserving its original colors. Enable <code>bUseGlyphInsteadOfNodeIcon</code> to use the built-in vector glyph instead.</td></tr>
+          <tr><td>Markers and routes</td><td>Edit <code>MarkerStyle</code>, <code>GlyphScale</code>, <code>NodeDiameter</code>, <code>RowSpacing</code>, <code>ColumnSpacing</code>, <code>NodeJitter</code>, route colors, thickness, dash length and gap. Choose <code>RouteShape = Straight</code> for direct links. <code>bAutoScaleNodes</code> shrinks drawings when rows or columns get close together. <code>MinimumHitDiameter</code> keeps touch targets large even with small symbols. <code>bAutoFitNodeLabels</code> keeps crowded vertical maps readable by placing the focused label beneath its node and hiding other labels that cannot fit.</td></tr>
+          <tr><td>Route shape and pattern</td><td><code>RouteShape</code> selects <code>Straight</code>, <code>Bezier</code> or <code>Orthogonal</code> (right angles). <code>OrthogonalLaneSpacing</code> separates overlapping right-angle routes and their node attachment points. It defaults to 14 Slate units and compresses to fit the row gap; zero restores shared midpoint bends. This changes drawing only, not graph connections. <code>Auto</code> preserves the original Curve Bend behavior. For BÃ©zier routes, adjust <code>BezierTension</code>, <code>CurveBend</code> and <code>CurveSegments</code>. <code>RoutePattern</code> chooses solid or dashed strokes; future, available, visited and locked patterns can override it separately. <code>Auto</code> keeps the original state patterns.</td></tr>
+          <tr><td>Route artwork</td><td>Assign a texture or UI material to <code>PathBrush</code>. The route runs horizontally along the artwork's U direction; V covers its width. Transparent borders produce soft edges. <code>PathTextureRepeatLength</code> controls repeating in Slate units; zero stretches artwork along each line or dash. Optional <code>FuturePathBrush</code>, <code>AvailablePathBrush</code>, <code>VisitedPathBrush</code> and <code>LockedPathBrush</code> replace artwork per state. Empty overrides use the shared brush; an empty shared brush uses plain lines. State colors and brush tint multiply the artwork, so set them to white to retain the original texture colors. Brushes support an optional UV Region for atlas artwork; border/box margins and brush tiling are ignored because routes use ribbon geometry.</td></tr>
+          <tr><td>Current-node arrow</td><td><code>bShowCurrentNodeIndicator</code> draws a down arrow above the current node, including horizontal maps. Edit <code>CurrentNodeIndicatorSize</code>, <code>CurrentNodeIndicatorColor</code>, <code>CurrentNodeIndicatorGap</code> and <code>CurrentNodeIndicatorOffset</code>. Assign <code>CurrentNodeIndicatorBrush</code> to replace the arrow with a texture or UI material. Its size and tint remain independent of the icon and ring.</td></tr>
+          <tr><td>Fonts and panels</td><td>Choose <code>Font</code> and <code>TextScale</code>; edit <code>PanelColor</code> for the HUD, <code>LegendPanelColor</code> for the map key, plus <code>TextColor</code>, <code>MutedTextColor</code> and <code>HeadingColor</code>.</td></tr>
+          <tr><td>Long maps</td><td>Enable <code>bScrollToFitRows</code> and set <code>RowSpacing</code>. The map scrolls vertically for <code>Ascending</code>/<code>Descending</code> and horizontally for <code>LeftToRight</code>/<code>RightToLeft</code>. Focus follows keyboard/gamepad navigation; mouse wheel, mouse dragging and touch dragging explore the route. Node labels move to the available side near map edges.</td></tr>
+          <tr><td>Boss and framing</td><td>Use <code>BossNodeScale</code> to emphasize the final encounter and <code>bInsetPaper</code> to choose a framed or continuous surface.</td></tr>
+          <tr><td>Player-facing details</td><td>Turn <code>bShowScreenChrome</code> off for a full-screen game map. Placeholder mode has no stat bar; the optional encounter mode shows supplies during encounters. Turn <code>bShowGenerationSummary</code> off to remove node counts and seed from a visible footer. Inspector, legend, floor guides and labels have separate visibility settings.</td></tr>
+          <tr><td>Selection and travel</td><td><code>SelectionHoldDuration</code> sets the selected-node hold in seconds, default 0.42. <code>TransitionFadeDuration</code> sets each fade around travel, default 0.18 seconds. Disable the widget's <code>bAnimateNodeTravel</code> for instant travel or reduced motion.</td></tr>
+          <tr><td>UI sounds</td><td>Assign <code>NodeHoverSound</code>, <code>NodeSelectSound</code>, <code>TransitionSound</code> and <code>ReturnSound</code> in the theme's Style. Unset references are silent. The widget's <code>bEnableUISounds</code> toggles playback; <code>UISoundVolume</code> sets its level from 0 to 1, default 0.8.</td></tr>
+        </tbody></table>
+        <p>At runtime, call <code>Set Presentation Theme</code>, <code>Set Presentation Style</code>, or
+          <code>Apply Style Preset</code> on the widget. These refresh the screen without changing the graph,
+          current route, focused node or pending seed. If you edit style properties, a theme, or node-type
+          icons directly, call <code>Refresh Style</code>. It loads replacement icon textures and redraws
+          the map without regenerating the route.</p>
+        <p>Enable <code>bShowStyleSwitcher</code> to show a preview button. Click or tap it, press
+          <kbd>T</kbd>, or press gamepad <strong>View</strong> while the map has focus.
+          <code>ToggleStyleKeys</code> replaces these bindings. Switching again restores the original
+          theme and per-widget edits. The button is available with the inspector hidden; a full-screen
+          map hides the header and footer buttons while keeping the keyboard/gamepad switch.
+          Calling a setter while previewing chooses that new style and ends the preview.</p>
+
+        <p>For the supplied GameMode, assign your theme to
+          <code>HarnessPresentationTheme</code>. When that property is empty,
+          <code>HarnessStylePreset</code> selects the initial built-in look, which defaults to Parchment.</p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Style groups</h3>
+            <ul>
+              <li><strong>Colors:</strong> backdrop, paper, ink, paths, current, reachable, focus, and error</li>
+              <li><strong>Layout:</strong> direction, spacing, node size, minimum hit diameter, padding, jitter, and inspector width</li>
+              <li><strong>Routes:</strong> straight, BÃ©zier or right-angle geometry, solid/dashed state patterns, texture or UI material brushes, repeat length, widths, colors and outlines</li>
+              <li><strong>Current node:</strong> down-arrow visibility, artwork, size, color, gap and screen-space offset</li>
+              <li><strong>Transitions and audio:</strong> selection hold, fade durations, hover, selection, travel and return cues</li>
+              <li><strong>Typography:</strong> global text scale</li>
+              <li><strong>Visibility:</strong> screen chrome, labels, inspector, legend, hints, floor guides, current label, debug coordinates</li>
+              <li><strong>Accessibility:</strong> high contrast and node-type color usage</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Layout directions</h3>
+            <ul>
+              <li><code>Ascending</code>: bottom to top</li>
+              <li><code>Descending</code>: top to bottom</li>
+              <li><code>LeftToRight</code></li>
+              <li><code>RightToLeft</code></li>
+            </ul>
+            <p>With <code>bScrollToFitRows</code> off, the map fits its rows to the canvas.
+              Turn it on to retain row spacing and scroll vertically or horizontally according to <code>Direction</code>.</p>
+          </div>
+        </div>
+
+        <h3>Node visuals by Gameplay Tag</h3>
+        <p>
+          Add exact Gameplay Tag keys to <code>NodeVisualsByTag</code>. Each
+          <code>FMapGraphNodePresentation</code> may provide:
+        </p>
+        <ul>
+          <li>A texture or UI material brush and artwork tint</li>
+          <li>A built-in glyph: Auto, Start, Battle, Elite, Mystery, Merchant, Rest, Treasure, or Boss</li>
+          <li>A short custom text glyph</li>
+          <li>A replacement display name</li>
+          <li>Inspector description or flavor text</li>
+          <li>An optional color override</li>
+        </ul>
+        <p>
+          The native widget considers exact tags on the node instance first, then exact tags on its
+          <code>UMapGraphNodeType</code>. Within either source, valid keys listed in
+          <code>NodeVisualTagPriority</code> are checked from first to last. Matching map keys omitted
+          from that array are checked afterward in ascending, case-sensitive tag-name order. This rule
+          is stable across runs and does not depend on map iteration or Gameplay Tag registration order.
+        </p>
+        <p>
+          If a presentation remains on <code>Auto</code>, the native fallback uses the node type's
+          explicit <code>Role</code>, then legacy tags and names. If a node type has an Icon texture,
+          the widget can use that project asset instead. Override <code>ResolveNodePresentation</code> in
+          a Blueprint or C++ subclass only when a project needs logic beyond the theme's deterministic priority.
+        </p>
+
+        <h3 id="widget">Widget settings and extension points</h3>
+        <table>
+          <thead><tr><th>Property</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>Rules</code></td><td>Rules used by generation controls and automatic initial generation. Leave unset to use Project Settings &gt; Game &gt; Map Graph Settings &gt; Default Rules. An explicitly assigned asset must load successfully.</td></tr>
+            <tr><td><code>InitialSeed</code></td><td>Reproducible seed used when the widget opens without an existing subsystem graph.</td></tr>
+            <tr><td><code>PresentationTheme</code></td><td>Reusable theme asset. When set, its Style is used instead of the per-widget fallback style.</td></tr>
+            <tr><td><code>PresentationStyle</code></td><td>Asset-independent style override used when no theme is assigned.</td></tr>
+            <tr><td><code>HeaderTitle</code>, <code>HeaderSubtitle</code></td><td>Screen identity and short instruction copy.</td></tr>
+            <tr><td><code>CurrentLocationLabel</code></td><td>Text drawn beside the active node when enabled by the style.</td></tr>
+            <tr><td><code>bShowGenerationControls</code></td><td>Shows or hides the Seed entry, -/+ controls, and Generate Seed button.</td></tr>
+            <tr><td><code>bAllowRandomGeneration</code></td><td>Allows the random API and shows Generate Random when generation controls are visible.</td></tr>
+            <tr><td><code>bAllowRouteRestart</code></td><td>Allows restart and shows the Restart Route button.</td></tr>
+            <tr><td><code>bAdvanceImmediatelyOnConfirm</code></td><td>Chooses automatic travel or project-controlled travel after activation. Automatic travel uses the selection and fade timing when animation is enabled.</td></tr>
+            <tr><td><code>bAnimateNodeTravel</code></td><td>Shows the selected-node hold and travel fades. Set false to commit valid automatic travel immediately.</td></tr>
+            <tr><td><code>bEnableUISounds</code>, <code>UISoundVolume</code></td><td>Enable or mute theme audio, and set its playback volume. Defaults are enabled and 0.8.</td></tr>
+            <tr><td><code>bAllowInspectingFutureNodes</code></td><td>Lets every input device focus future nodes without making them reachable.</td></tr>
+            <tr><td><code>bAllowMouseDragScrolling</code></td><td>Enables left-drag on empty paper and middle-drag anywhere on a scrolling map. Enabled by default.</td></tr>
+            <tr><td><code>InputBindings</code></td><td>Replaces keyboard/gamepad key arrays, analog axes and thresholds, and the -/+ seed adjustment step.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Callable widget functions include:</p>
+        <ul>
+          <li><code>SetGraph</code>, <code>GenerateFromSeed</code>, <code>GenerateFromDisplayedSeed</code>, <code>GenerateRandom</code>, and <code>RestartRoute</code></li>
+          <li><code>SetDisplayedSeed</code> and <code>AdjustDisplayedSeed</code> update the shared pending seed used by every Generate Seed input path.</li>
+          <li><code>FocusNode</code>, <code>ActivateFocusedNode</code>, and <code>FocusMap</code></li>
+          <li><code>GetGraph</code>, <code>GetFocusedNodeId</code>, and <code>GetDisplayedSeed</code></li>
+          <li><code>IsNodeTransitionActive</code>, <code>GetNodeSelectionProgress</code>, <code>GetTransitionNodeId</code>, and <code>GetNodeTransitionFadeOpacity</code> expose the current transition for custom screens. <code>PlayReturnSound</code> plays the theme's return cue using the widget's audio settings.</li>
+        </ul>
+
+        <p>
+          Override the Blueprint-native <code>ResolveNodePresentation</code> function from Blueprint or C++ for project-specific
+          icon, name, description, or color logic. Call the parent implementation when you want the theme,
+          node-type properties, and native fallback to remain available.
+        </p>
+      </section>
+
+      <section id="authoring">
+        <h2>Authoring node types and rules</h2>
+        <h3>Node types</h3>
+        <p>Create as many Data Assets of type <code>MapGraphNodeType</code> as you need. The generator has no fixed list of categories. Add them to your rules' <code>DefaultTypes</code> or per-floor <code>RowTypeOverrides</code>, then configure:</p>
+        <ul>
+          <li><strong>Role:</strong> Start, Battle, Elite, Mystery, Merchant, Rest, Treasure, Boss, or Auto. Explicit roles keep built-in icons and example encounter behavior stable when assets are renamed or display names are translated.</li>
+          <li><strong>DisplayName:</strong> label shown to players.</li>
+          <li><strong>Icon:</strong> optional soft texture reference used by presentations. The included example types point to editable icons in <code>Example/Icons</code>; replace any one without changing its encounter behavior.</li>
+          <li><strong>Color:</strong> optional category tint.</li>
+          <li><strong>Tags:</strong> exact Gameplay Tags used by queries, quotas, and themes.</li>
+          <li><strong>Weight:</strong> relative ordinary-selection weight; zero excludes the type from ordinary random selection. To preserve version 1 seed results, quota repair may still choose a zero-weight type that carries none of the configured quota tags.</li>
+        </ul>
+        <p><code>Role</code> does not change selection weights, graph connections, or quota tags.
+          A theme can replace a glyph without changing the encounter. Leave Role on <code>Auto</code>
+          for existing content: the fallback checks instance tags, type tags, asset name, then display
+          name. Set an explicit role for new or localized node types.</p>
+        <p>
+          Every non-empty <code>DefaultTypes</code> pool must contain at least one positive finite weight.
+          Negative, non-finite, and all-zero pools are rejected by <code>ValidateRules</code>.
+        </p>
+        <p>The plugin registers these example-friendly native tags:</p>
+        <ul>
+          <li><code>Map.NodeType.Combat</code></li>
+          <li><code>Map.NodeType.Elite</code></li>
+          <li><code>Map.NodeType.Mystery</code></li>
+          <li><code>Map.NodeType.Shop</code></li>
+        </ul>
+        <p>Register project tags through Unreal Engine Gameplay Tags settings.</p>
+
+        <h3>Rules</h3>
+        <p>Create a Data Asset of type <code>MapGraphRules</code>.</p>
+        <dl>
+          <dt>Rows</dt>
+          <dd>
+            Layer count from 3 through 128. Row 0 is the start and <code>Rows - 1</code> is terminal.
+          </dd>
+
+          <dt>RowLayouts</dt>
+          <dd>
+            Each entry supplies <code>MinNodes</code>, <code>MaxNodes</code>, and
+            <code>ReconnectBias</code>. If the array is shorter than Rows, the final entry repeats.
+            If empty, struct defaults are used. Bounds must stay between 1 and 32, and the authored
+            maximum graph size may not exceed 2,048 nodes.
+          </dd>
+
+          <dt>StartType / EndType</dt>
+          <dd>
+            When assigned, the first or final row contains one protected node of that type. Quota
+            enforcement does not change protected endpoints.
+          </dd>
+
+          <dt>DefaultTypes</dt>
+          <dd>Weighted candidates for floors without a type override or fixed endpoint.</dd>
+
+          <dt>RowTypeOverrides</dt>
+          <dd>Optional candidate pools for specific zero-based floors. Each entry has a
+            <code>RowIndex</code> and <code>Types</code>; its types replace DefaultTypes on that floor.
+            Use one Rest candidate for a guaranteed camp, one Treasure candidate for a reward floor,
+            or several weighted candidates for a restricted encounter pool.</dd>
+        </dl>
+        <p>Each floor may appear once in <code>RowTypeOverrides</code>. Its index must be inside
+          <code>Rows</code> and cannot target a floor fixed by StartType or EndType. An override needs
+          at least one non-null candidate with positive finite weight. Empty, all-zero, negative-weight,
+          duplicate-floor and out-of-range overrides are rejected by <code>ValidateRules</code>.</p>
+        <p>Overrides select encounter types; <code>RowLayouts</code> still controls how many nodes that
+          floor contains. Their chosen types and tags are protected from quota changes. Keep the
+          override list empty to retain the existing default-pool generation behavior.</p>
+      </section>
+
+      <section id="edges">
+        <h2>Edge policy</h2>
+        <h3>Adjacent-row backbone</h3>
+        <p>
+          Every non-terminal node receives between <code>MinFanOut</code> and
+          <code>MaxFanOut</code> adjacent-row outgoing edges, and every node after row 0 receives at
+          least one adjacent-row parent. Both fan-out bounds must be from 1 through 32, and the minimum
+          cannot exceed the maximum.
+        </p>
+        <p>
+          Adjacent edges are non-crossing. <code>MinColDelta</code> and <code>MaxColDelta</code>
+          constrain the difference between centered <code>XNorm</code> coordinates, not raw column
+          indices. A <code>0 / 0</code> pair preserves the unbounded compatibility window; otherwise
+          the minimum cannot exceed the maximum.
+        </p>
+        <p>
+          The Ascent example uses <code>-1 / +1</code>, fan-out <code>1..2</code>, and disables
+          same-row and skipped-row extras. Its first choice floor has two rooms so the start node
+          can reach both without a long sideways jump. Wider jumps remain available for other games
+          by editing the rules asset.
+        </p>
+
+        <h3>Reconnect bias belongs to the destination row</h3>
+        <p>
+          After the required backbone is built, the <code>ReconnectBias</code> stored in a row layout
+          is evaluated for each eligible optional adjacent connection entering that row. Optional
+          reconnections still obey maximum fan-out, centered-column bounds, uniqueness, and
+          non-crossing constraints.
+        </p>
+
+        <h3>Same-row and skip extras</h3>
+        <ul>
+          <li><code>SameRowLinkChance</code> is evaluated for forward pairs within a row.</li>
+          <li><code>SkipLinkChance</code> is evaluated per eligible source node.</li>
+          <li>A skip spans at least 2 and at most <code>MaxSkipRows</code> rows as one direct edge.</li>
+          <li>Same-row and skip edges are extras; adjacent fan-out does not cap total out-degree after extras.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Constraints are not silently relaxed.</strong>
+          If row sizes, fan-out, centered-column bounds, and non-crossing coverage cannot be satisfied
+          together, validation fails and generation returns no graph with a <code>LogMapGraph</code>
+          diagnostic. A protected one-node final row is incompatible with <code>MinFanOut</code> greater
+          than 1.
+        </div>
+      </section>
+
+      <section id="quotas">
+        <h2>Gameplay Tag quotas</h2>
+        <p>Each <code>FMapGraphQuota</code> uses one exact Gameplay Tag:</p>
+        <ul>
+          <li><code>MinCount</code>: minimum number of distinct rows containing the tag.</li>
+          <li><code>MaxCount</code>: maximum number of distinct rows containing the tag.</li>
+          <li><code>MinRowSpacing</code>: minimum row-index distance between tagged rows.</li>
+        </ul>
+        <p>
+          Counts and spacing cannot be negative, <code>MinCount</code> cannot exceed
+          <code>MaxCount</code>, and duplicate quota entries for the same tag are rejected. Minimums use
+          exact per-node tags so satisfying one quota does not overwrite the node type or damage another
+          quota.
+        </p>
+        <p>
+          Quota row sets are solved with spacing and protected rows considered together. When reducing a
+          quota requires removing a tag supplied by a mutable node type, the generator preserves its
+          unrelated exact tags and uses a non-quota replacement when available. Conflicting quotas,
+          insufficient mutable rows, spacing conflicts, or protected-floor conflicts cause generation
+          to fail with a diagnostic. Floors in <code>RowTypeOverrides</code> are protected alongside
+          StartType and EndType. Quotas cannot turn an authored camp or treasure floor into another
+          encounter. Mixed protected pools can still fail after sampling when a chosen combination
+          conflicts with a quota; use fixed candidates where a floor must be guaranteed.
+        </p>
+      </section>
+
+      <section id="blueprints">
+        <h2>Blueprint workflows</h2>
+        <h3>Recommended shared-state flow</h3>
+        <ol class="steps">
+          <li>Get the <strong>Map Graph Game Instance Subsystem</strong>.</li>
+          <li>Call <strong>Generate From Seed</strong> or <strong>Generate Random</strong>.</li>
+          <li>Bind <strong>On Graph Changed</strong> and <strong>On Navigation Changed</strong>.</li>
+          <li>Query <strong>Get Available Next Nodes</strong> and call <strong>Advance To</strong>.</li>
+          <li>Create a <strong>Map Graph Widget</strong> or a project Blueprint subclass and add it to the viewport.</li>
+        </ol>
+        <p>
+          The subsystem retains one graph and navigator for the Game Instance lifetime. The native widget
+          adopts an existing subsystem graph when constructed and listens for later graph or navigation
+          changes. This keeps the visible route, gameplay code, and other UI consumers on the same state.
+        </p>
+        <p>
+          For a widget-only setup, assign <strong>Default Rules</strong> in
+          <strong>Project Settings &gt; Game &gt; Map Graph Settings</strong>, then create and display a
+          Map Graph Widget. With its Rules property unset, it uses those defaults to generate its initial
+          graph when the subsystem is empty.
+        </p>
+
+        <h3>Direct helper flow</h3>
+        <ol>
+          <li>Call <strong>Generate Act Map</strong> or <strong>Generate Random Act Map</strong>.</li>
+          <li>Retain the returned <code>MapGraphData</code> in a Blueprint member variable.</li>
+          <li>Call <strong>Create Navigator</strong> and retain the returned navigator.</li>
+          <li>Use <strong>Get Available Next Nodes</strong> and <strong>Advance To</strong>.</li>
+        </ol>
+        <p>
+          Direct helper objects use transient ownership. Keep them in GC-visible Blueprint variables or
+          <code>UPROPERTY</code> fields. If Generate Act Map receives no Rules value, it loads
+          <strong>Project Settings &gt; Game &gt; Map Graph Settings &gt; DefaultRules</strong>.
+        </p>
+
+        <h3>Widget events</h3>
+        <ul>
+          <li><code>OnGraphGenerated(Graph, Seed)</code>: successful widget generation completed.</li>
+          <li><code>OnNodeFocused(Node)</code>: focus moved to another valid node.</li>
+          <li><code>OnNodeActivated(Node)</code>: a reachable node was confirmed. This is the immediate travel request, before any selection hold or fade; it does not guarantee that travel will complete.</li>
+          <li><code>OnNodeAdvanced(Node)</code>: travel successfully committed and map focus refreshed. With animated travel, this occurs after the selection hold and fade-out, once the destination is revalidated. Gameplay opened by a listener keeps its focus.</li>
+          <li><code>OnRouteRestarted()</code>: Restart Route reset navigation and map focus; reset your game state here.</li>
+        </ul>
+        <p>
+          Use <code>OnNodeAdvanced</code> to open gameplay after the route changes.
+          Use <code>OnNodeActivated</code> for a request or confirmation flow when your project controls
+          travel with <code>bAdvanceImmediatelyOnConfirm = false</code>.
+        </p>
+      </section>
+
+      <section id="encounter-integration">
+        <h2>Connecting encounters to the map</h2>
+        <p><code>UMapGraphDemoWidget</code> extends the native map with a replaceable destination screen.
+          The default <code>AMapGraphGameMode.HarnessWidgetClass</code> is <code>UMapGraphShowcaseWidget</code>,
+          which adds an example selector over this destination screen. Set that property to
+          <code>UMapGraphWidget</code> for the map presentation alone, or supply your own widget subclass.</p>
+        <p>By default, <code>bSkipStartingEncounter = true</code> opens directly on the map without a
+          starting gift. After valid travel, <code>bUseGameplayPlaceholder = true</code> shows the selected
+          node's icon and name, <strong>Your gameplay goes here</strong>, and one <strong>Return to map</strong>
+          action. This mode applies no health changes, rewards or costs.</p>
+        <h3>Enable the optional encounter loop</h3>
+        <p>Set <code>bUseGameplayPlaceholder = false</code> and <code>bSkipStartingEncounter = false</code>
+          on your Demo Widget subclass to include the starting gift and the health, gold and choice-based
+          encounters below. Assign that class to <code>HarnessWidgetClass</code> in your GameMode.</p>
+        <p>In encounter mode, a successful <code>OnNodeAdvanced</code> opens an encounter and suspends map
+          input. Completing it presents the result before returning to the same graph and route. Health,
+          gold and attack upgrades stay in the transient <code>UMapGraphDemoRun</code>. Restart Route and
+          successful widget regeneration reset both the route and demo run. Defeat offers a fresh run;
+          defeating the boss offers <strong>Start a new run</strong> or <strong>View completed route</strong>.
+          Starting again resets supplies and encounters on the same map.</p>
+        <table>
+          <thead><tr><th>Encounter</th><th>Example behavior</th></tr></thead>
+          <tbody>
+            <tr><td>Start</td><td>Choose starting gold or an attack upgrade.</td></tr>
+            <tr><td>Enemy / Elite / Boss</td><td>Strike or guard against a visible attack intent. Win gold; elites also improve attack damage. The boss completes the run.</td></tr>
+            <tr><td>Mystery</td><td>Trade health for gold, or take a small, safe heal.</td></tr>
+            <tr><td>Shop</td><td>Buy healing or an upgrade, or leave. Unaffordable purchases are disabled.</td></tr>
+            <tr><td>Rest</td><td>Recover health or improve attack damage.</td></tr>
+            <tr><td>Treasure</td><td>Choose gold or healing supplies.</td></tr>
+          </tbody>
+        </table>
+        <p>Choices show the health they can actually restore and the damage the enemy will return after
+          each combat action. A finishing blow prevents that response. Unavailable choices explain what
+          is missing, and results show the actual signed changes to health, gold and attack damage.</p>
+        <p>Set <code>MapGraphNodeType.Role</code> to select the built-in encounter meaning, or override
+          <code>ResolveEncounter(Node)</code> in a Demo Widget Blueprint for your own mapping. Theme
+          icons do not control gameplay. Explicit roles take priority; Auto retains legacy tag/name
+          matching. Unknown roles use a basic battle, or a boss on the final floor.</p>
+        <h3 id="demo-profile">Tune the example with a balance asset</h3>
+        <ol>
+          <li>Create a <strong>MapGraphDemoProfile</strong> Data Asset in your project.</li>
+          <li>Set starting health, maximum health, gold and attack power.</li>
+          <li>Tune strike and guard values, enemy health/damage/rewards, gift values, shop prices,
+            mystery costs, rest benefits and treasure rewards.</li>
+          <li>Assign it to <code>AMapGraphGameMode.HarnessDemoProfile</code> or directly to
+            <code>UMapGraphDemoWidget.DemoProfile</code>.</li>
+        </ol>
+        <p>A fresh run copies and clamps the profile into <code>DemoRun.ActiveSettings</code>.
+          Changing the asset does not rewrite an active encounter. Restart the route to use the new
+          values. Zero costs, zero rewards and harmless enemies are valid; health and attack values
+          are clamped so the demo can progress. An unset profile uses the built-in defaults.</p>
+        <p>For a project-owned interface, call <code>ResetRunWithProfile</code> or
+          <code>ResetRunWithSettings</code> on a Demo Run. <code>ResetRun</code> keeps its current
+          balance snapshot. These methods reset health, supplies and completed-node protection.</p>
+        <p>For your own game, use the base Map Graph Widget events to open project-owned encounters and
+          retain consequences in your own run/save state. The example model is deliberately transient;
+          it is not a combat framework or save system. Its <code>BeginEncounter</code>, <code>GetChoices</code>,
+          <code>Choose</code> and <code>ReturnToMap</code> methods are available to Blueprint for alternative
+          example UI. <code>ChooseEncounterAction</code> applies choices in encounter mode;
+          <code>ContinueFromEncounter</code> closes the placeholder or a resolved encounter and refreshes
+          the native Demo Widget. Call <code>RestartCompletedRun</code> after victory or defeat in encounter mode to reset
+          the route and demo state while retaining the graph and assigned balance profile. This remains
+          available when the optional map restart control is disabled. The widget follows graph adoption and external navigation updates.
+          An external route change during an open encounter discards the stale demo run before showing
+          the new location. Gate low-level subsystem navigation in your game while an encounter is
+          unresolved; the graph core does not impose combat rules.</p>
+        <p>Encounter actions support click/tap, Up/Down or W/S, gamepad D-pad or left stick, and
+          Enter/Space or the gamepad bottom face button to confirm. Holding confirm does not repeat
+          an action. Returning to the map restores map focus. Both map presets supply the encounter
+          font and palette. All costs are shown before applying the choice; resolved nodes cannot pay
+          their rewards a second time.</p>
+      </section>
+
+      <section id="cpp">
+        <h2>C++ workflow</h2>
+        <p>
+          Add <code>MapGraph</code> to the consuming module's dependency list. For shared runtime state,
+          include <code>MapGraphSubsystem.h</code>, <code>MapGraphRules.h</code>, and
+          <code>MapGraphData.h</code>.
+        </p>
+
+        <h3>Generate and retain a random layout through the subsystem</h3>
+        <pre><code>UMapGraphSubsystem* Maps =
+    GetGameInstance()-&gt;GetSubsystem&lt;UMapGraphSubsystem&gt;();
+
+UMapGraphData* Graph = Maps
+    ? Maps-&gt;GenerateRandom(this, Rules)
+    : nullptr;
+
+if (Graph)
+{
+    const int32 ReproducibleSeed = Graph-&gt;Seed;
+    // Store ReproducibleSeed with your generation contract.
+}</code></pre>
+
+        <h3>Validate and generate directly</h3>
+        <pre><code>UMapGraphGenerator* Generator =
+    NewObject&lt;UMapGraphGenerator&gt;(this);
+
+FString RulesError;
+if (!Generator-&gt;ValidateRules(Rules, RulesError))
+{
+    // Present or log RulesError.
+    return;
+}
+
+UMapGraphData* Graph =
+    Generator-&gt;GenerateGraph(this, Rules, Seed);
+
+if (!Graph)
+{
+    // The complete constraint set was not satisfied.
+    return;
+}</code></pre>
+
+        <p>
+          Use <code>UMapGraphBPLibrary::CreateNavigator</code> or create a
+          <code>UMapGraphNavigator</code> and call <code>Initialize</code>. Keep directly created graph,
+          generator, and navigator objects in GC-visible properties when they must survive the current call.
+        </p>
+
+        <h3>Create the runtime screen in an existing UI flow</h3>
+        <pre><code>UMapGraphWidget* MapScreen =
+    CreateWidget&lt;UMapGraphWidget&gt;(PlayerController, WidgetClass);
+
+if (MapScreen)
+{
+    MapScreen-&gt;Rules = Rules;
+    MapScreen-&gt;InitialSeed = SavedSeed;
+    MapScreen-&gt;PresentationTheme = Theme;
+    MapScreen-&gt;AddToViewport(100);
+    MapScreen-&gt;FocusMap();
+}</code></pre>
+        <p>
+          Configure Game-and-UI input mode and mouse-cursor behavior to fit your project. The included
+          <code>AMapGraphGameMode</code> demonstrates one complete setup.
+        </p>
+      </section>
+
+      <section id="events">
+        <h2>Subsystem, delegates, and navigation</h2>
+        <h3>Single source of truth</h3>
+        <p>
+          Access the Game Instance subsystem through
+          <code>GetGameInstance()-&gt;GetSubsystem&lt;UMapGraphSubsystem&gt;()</code>. It owns the active
+          transient graph and navigator.
+        </p>
+        <ul>
+          <li><code>OnGraphChanged(Graph)</code> fires after a graph is successfully generated, adopted or cleared. Graph is null after clearing.</li>
+          <li><code>OnNavigationChanged(CurrentNodeId)</code> fires after successful graph adoption, advance, restore, reset or clearing. CurrentNodeId is invalid after clearing.</li>
+          <li>Failed generation and failed navigation do not broadcast a successful state change.</li>
+        </ul>
+        <p>Call <code>ClearGraph</code> on the subsystem to clear the active graph and navigation history
+          in every bound widget. Calling <code>SetGraph(nullptr)</code> on a widget uses the same clearing
+          behavior. <code>UseExistingGraph(nullptr)</code> keeps its existing no-op behavior. Clearing an
+          already empty subsystem does not send duplicate events.</p>
+
+        <h3>Navigation contract</h3>
+        <ul>
+          <li>An unset start ID (invalid GUID) requests automatic start selection.</li>
+          <li>A syntactically valid ID absent from the graph is rejected.</li>
+          <li><code>GetAvailableNextNodes</code> excludes locked and dangling destinations.</li>
+          <li><code>AdvanceTo</code> succeeds only for an existing destination on an unlocked outgoing edge.</li>
+          <li><code>SetCurrentNodeAndPath</code> validates the complete explicit path before changing state.</li>
+          <li>With an empty path, restore searches from the automatic start.</li>
+          <li>Failed advance or restore preserves previous navigation state.</li>
+        </ul>
+
+        <div class="callout gold">
+          <strong><code>Initialize</code> is a legacy void-returning API.</strong>
+          After an explicit start, inspect <code>GetCurrentNodeId</code> or <code>GetCurrentNode</code>.
+          A rejected explicit start leaves CurrentNodeId invalid. The Blueprint Create Navigator helper
+          returns the navigator object even when its valid-but-missing start was rejected.
+        </div>
+
+        <p>
+          <code>ValidateNodeChain</code> requires every ID to exist and each consecutive edge to be
+          unlocked. <code>HasPathAcrossRows(FromRow, ToRow)</code> is forward-only, understands same-row
+          and direct skip edges, and ignores dangling endpoints.
+        </p>
+
+        <h3 id="graph-mutation">Editing graph data safely</h3>
+        <p>Call <code>BuildIndices</code> after loading a graph or adding, removing, reordering, or
+          changing node IDs or edge endpoints. It rebuilds node lookups and incoming/outgoing edge
+          indices. Generation and navigator initialization already do this for you.</p>
+        <p>Changing an edge's <code>LockState</code> or <code>Weight</code> does not require a rebuild.
+          Queries read those values from the current edge payload. A navigator's path edges are
+          snapshots recorded when travel occurred. Refresh your presentation after direct payload
+          edits; changing arrays does not broadcast subsystem events.</p>
+        <p>C++ consumers can use <code>FindNode</code>, <code>FindUnlockedEdge</code> and
+          <code>ForEachOutgoingEdge</code> to avoid payload copies. Returned pointers remain valid only
+          until their source array changes, and a visitor must not mutate the graph. Keep Blueprint
+          copy helpers when independent values are needed.</p>
+
+        <h3>UI layout data</h3>
+        <ul>
+          <li><code>UMapGraphData::GetRowNodes</code> copies stored graph order; it does not promise column sorting.</li>
+          <li><code>UMapGraphUIHelpers::GetRowLayout</code> returns a row sorted by <code>Col</code>.</li>
+          <li><code>GetAllNodes</code> and <code>GetAllEdges</code> return copies of the graph payload.</li>
+        </ul>
+      </section>
+
+      <section id="persistence">
+        <h2>Persistence and save contracts</h2>
+        <div class="callout danger">
+          <strong>Do not save transient UObject references.</strong>
+          <code>UMapGraphData</code>, <code>UMapGraphNavigator</code>, and the Game Instance subsystem are
+          runtime state, not a durable SaveGame schema. Persist project-owned value data and reconstruct
+          runtime objects after load.
+        </div>
+
+        <h3>Compact regeneration save</h3>
+        <p>Store at least:</p>
+        <ul>
+          <li><code>GenerationVersion</code></li>
+          <li>Seed</li>
+          <li>Rules asset path</li>
+          <li>Current node ID</li>
+          <li>Ordered navigator path node IDs</li>
+        </ul>
+        <p>
+          Regenerate first, verify the generated version and inputs, then restore the path. Compact
+          regeneration requires unchanged rule values, referenced node-type data, rules asset path, and
+          generation behavior.
+        </p>
+
+        <h3>Long-lived full-payload save</h3>
+        <p>
+          For saves that should survive rules edits, define a project-owned SaveGame schema containing
+          the required node and edge values, node-type asset identifiers, navigator progress, and
+          game-specific encounter state. On load, resolve those values, construct or populate a
+          <code>UMapGraphData</code>, then call <code>BuildIndices</code> before indexed queries or navigation.
+        </p>
+        <div class="callout gold">
+          <strong>Full-payload reconstruction requires project code.</strong>
+          Nodes and Edges are Blueprint read-only and Map Graph 1.3.0 does not include a public Blueprint
+          deserializer. Use C++ or a project-owned C++/Blueprint wrapper. <code>UseExistingGraph</code>
+          adopts an already reconstructed graph; it is not a deserializer.
+        </div>
+        <p>
+          Moving or renaming a rules asset changes newly generated deterministic node IDs. Rule and
+          node-type changes can alter layout, types, and connectivity even when the seed is unchanged.
+        </p>
+      </section>
+
+      <section id="migration">
+        <h2>Migration and backward compatibility</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>GenerationVersion</th>
+              <th>What changed</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.1.1 to 1.2.0</td>
+              <td>1 &rarr; 1</td>
+              <td>
+                Native runtime showcase, presentation themes, random-seed helpers and buttons,
+                widget events, and subsystem change delegates were added. Deterministic identity and
+                generation version remain unchanged.
+              </td>
+              <td>
+                Existing compact saves remain subject to the same unchanged-input contract. Re-test
+                project UI and bindings if adopting the new widget or delegates.
+              </td>
+            </tr>
+            <tr>
+              <td>Legacy data without a version</td>
+              <td>0</td>
+              <td>Node GUIDs were random and cannot be reconstructed from a seed.</td>
+              <td>
+                Load a stored full graph when available, call <code>BuildIndices</code>, preserve its IDs,
+                and migrate project progress explicitly.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>1.2.0 to 1.3.0</h3>
+        <p>The generator identity version remains unchanged. Unchanged rules and inputs reproduce
+          the same graph. Updated example rules intentionally produce new routes. The example map
+          is now <code>MapGraphShowcase</code>; core redirects migrate serialized soft references to the new map path. Update literal load paths to the new name.
+          Replace references to removed example Widget Blueprints with a native MapGraph widget.
+          New presentation, sound, selection and destination settings have editable defaults.</p>
+        <h3>Example-content migration in 1.2.0</h3>
+        <p>
+          The 1.2.0 package does not include the former example-only <code>WBP_Door</code>,
+          <code>WBP_GraphNode</code>, or <code>WBP_MapGraph</code> assets. The native
+          <code>UMapGraphWidget</code> showcase replaces them. They were not generator or navigator
+          runtime APIs. If project content referenced those older example paths, replace the reference
+          with a project-owned widget or a <code>MapGraphWidget</code> Blueprint subclass before
+          removing the older package.
+        </p>
+
+        <h3>Adopting editable roles, floors and balance</h3>
+        <p>Existing node types keep <code>Role = Auto</code>, existing rules have no row type overrides,
+          and an unset DemoProfile uses the original balance defaults when encounter mode is enabled.
+          To restore the starting gift and playable choices, set <code>bUseGameplayPlaceholder = false</code>
+          and <code>bSkipStartingEncounter = false</code> on the Demo Widget. To retain immediate automatic
+          travel, set <code>bAnimateNodeTravel = false</code>. Public graph and navigation
+          function names, serialized property names, and redirects are preserved. No legacy wrapper
+          needs to be removed from project Blueprints.</p>
+        <p>Changing any rules, candidate weights, node tags or authored floor overrides changes the
+          generation inputs. Preserve the original rules for compact saved runs, or save the full
+          graph payload before adopting new example content. The generator contract remains
+          <code>GenerationVersion = 1</code>; a matching seed alone does not freeze edited rules.</p>
+
+        <h3>Earlier 1.1.x rule migration reminders</h3>
+        <ul>
+          <li><code>BossType</code> was renamed to <code>EndType</code>; a property redirect is included.</li>
+          <li>Adjacent fan-out requires <code>1 &lt;= MinFanOut &lt;= MaxFanOut</code>.</li>
+          <li>Row-count ranges are solved end-to-end before node allocation.</li>
+          <li>Adjacent column windows use centered <code>XNorm</code>; <code>0 / 0</code> is unbounded compatibility mode.</li>
+          <li>Impossible coverage returns no graph rather than adding an out-of-policy edge.</li>
+          <li>Skip links are direct multi-row edges.</li>
+          <li>Destination-row <code>ReconnectBias</code> controls optional adjacent connections entering that row.</li>
+          <li>Quota counts are distinct tagged rows, not individual tagged nodes.</li>
+          <li>Zero-weight types are excluded from ordinary selection.</li>
+          <li>Navigator restore validates all IDs and unlocked edges transactionally.</li>
+        </ul>
+
+        <h3>Public API deprecation policy</h3>
+        <p>
+          The public compatibility surface consists of exported Runtime-module classes and structs,
+          public reflected members, documented config keys, the documented commandlet interface, and
+          saved-data generation versions. Private implementation details and Editor private classes are
+          not public API.
+        </p>
+        <ul>
+          <li>Patch releases do not remove documented public symbols or intentionally break their contract.</li>
+          <li>A public symbol is deprecated with a replacement before removal and remains through at least one subsequent published minor version.</li>
+          <li>Safe reflected renames use Unreal redirects.</li>
+          <li>Changes that invalidate deterministic regeneration require a new <code>GenerationVersion</code> and migration notes.</li>
+          <li>Security, legal, or engine-compatibility constraints may require a faster change with explicit release notes and a migration path where safely possible.</li>
+        </ul>
+        <p>Version 1.3.0 has no live C++ or Blueprint symbol marked for removal.</p>
+      </section>
+
+      <section id="performance">
+        <h2>Performance, flexibility, and product boundaries</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Event-driven defaults</h3>
+            <ul>
+              <li><code>UMapGraphWidget</code> disables native Tick.</li>
+              <li>A Slate active timer runs only while the selection and travel transition is active.</li>
+              <li><code>AMapGraphGameMode</code> disables actor Tick.</li>
+              <li>Presentation refreshes on input, generation, navigation, property synchronization, and Slate invalidation.</li>
+              <li>Subsystem delegates broadcast successful changes instead of requiring polling.</li>
+              <li>Built graph indices make navigation and reachability visit connected edges instead of repeatedly scanning the whole edge array.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Generation limits</h3>
+            <ul>
+              <li>3 to 128 rows</li>
+              <li>Up to 32 nodes per row</li>
+              <li>Up to 2,048 authored maximum nodes</li>
+              <li>Fan-out values from 1 through 32</li>
+              <li>Synchronous generation</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          Profile large or highly constrained rules in the target game before generating on a
+          latency-sensitive path. Use axis-aligned scrolling for a long route or fitting for an overview.
+          Dense graphs may still be crowded at small viewports; node size, spacing, inspector visibility,
+          labels, and direction are exposed for adjustment.
+        </p>
+
+        <h3>What Map Graph intentionally does not provide</h3>
+        <ul>
+          <li>Terrain, rooms, dungeon geometry, or world streaming</li>
+          <li>A production combat, reward, or economy framework; the included encounter loop is a small editable example</li>
+          <li>A durable project SaveGame schema</li>
+          <li>Network authority or replication policy</li>
+          <li>Project-specific gameplay scenes, camera transitions, music, or confirmation rules</li>
+        </ul>
+        <p>
+          These remain project responsibilities. Use graph/node IDs, tags, widget events, subsystem
+          delegates, and unlocked-route validation as integration points.
+        </p>
+      </section>
+
+      <section id="validation">
+        <h2>Headless validation commandlet</h2>
+        <p>
+          <code>MapGraphTest</code> is editor-only. Run it with <code>UnrealEditor-Cmd</code> from a
+          project in which the plugin is enabled.
+        </p>
+
+        <h3>Regression contracts</h3>
+        <pre><code>UnrealEditor-Cmd.exe Project.uproject -run=MapGraphTest -Suite=Regression -Count=64 -unattended -nop4</code></pre>
+
+        <h3>Example or production-rules smoke</h3>
+        <pre><code>UnrealEditor-Cmd.exe Project.uproject -run=MapGraphTest -Suite=AssetSmoke -Rules=/MapGraph/Example/MapGraphRules.MapGraphRules -Count=1000 -unattended -nop4</code></pre>
+
+        <h3>All suites</h3>
+        <pre><code>UnrealEditor-Cmd.exe Project.uproject -run=MapGraphTest -Suite=All -Count=64 -unattended -nop4</code></pre>
+
+        <p>
+          Suite names are <code>Regression</code>, <code>AssetSmoke</code>, and <code>All</code>.
+          Count must be between 1 and 10000. AssetSmoke accepts another <code>MapGraphRules</code> object
+          path through <code>-Rules</code>.
+        </p>
+
+        <table>
+          <thead><tr><th>Exit code</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Every requested contract passed.</td></tr>
+            <tr><td>1</td><td>Invocation or setup error.</td></tr>
+            <tr><td>2</td><td>One or more contract assertions failed.</td></tr>
+          </tbody>
+        </table>
+
+        <p>The commandlet emits a machine-readable summary:</p>
+        <pre><code>MAPGRAPH_TEST_SUMMARY schema=1 suite=... cases=... assertions=... failures=... setup_errors=... count=... fingerprint=...</code></pre>
+        <div class="callout">
+          <strong>Parse by prefix, not file position.</strong>
+          Unreal Engine writes normal shutdown messages after the summary. Search for the final line
+          beginning with <code>MAPGRAPH_TEST_SUMMARY</code>.
+        </div>
+        <p>
+          The commandlet verifies Map Graph contracts. It does not replace a consuming project's UI,
+          save migration, gameplay, performance, cook, package, engine-version, platform, or input-device
+          testing.
+        </p>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>Troubleshooting</h2>
+
+        <details open>
+          <summary>The example map opens, but the route screen does not appear</summary>
+          <div>
+            <ol>
+              <li>Confirm the map uses <code>MapGraphGameMode</code> in World Settings.</li>
+              <li>Confirm <code>bShowInteractiveHarness</code> is enabled.</li>
+              <li>Confirm <code>HarnessRules</code> resolves to a valid <code>MapGraphRules</code> asset.</li>
+              <li>Inspect <code>LogMapGraph</code> for a load, subsystem, or generation error.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>Keyboard, controller, or touch interaction does not respond</summary>
+          <div>
+            <ol>
+              <li>Use Game-and-UI or UI-only input mode while the map screen is open.</li>
+              <li>Give the widget user focus and call <code>FocusMap</code> after opening it.</li>
+              <li>Check that a different full-screen widget is not intercepting key, gamepad, or pointer input.</li>
+              <li>For touch travel, press and release the same reachable marker without dragging or adding a second contact.</li>
+              <li>After returning from another menu, call <code>FocusMap</code> again.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>A node can be inspected but not selected</summary>
+          <div>
+            <p>
+              This is expected for future or disconnected nodes. Only the unlocked outgoing destinations
+              from the current node can travel. Reachable nodes use the highlighted reachable state and
+              the inspector says <strong>Confirm to travel</strong>.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>The theme's per-widget style edits do not appear</summary>
+          <div>
+            <p>
+              When <code>PresentationTheme</code> is assigned, the theme's Style replaces
+              <code>PresentationStyle</code>. Edit the theme asset, or clear PresentationTheme to use the
+              widget's fallback style.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Generate Random works, but I cannot reproduce the result later</summary>
+          <div>
+            <p>
+              Read the visible Seed field or <code>Graph-&gt;Seed</code> immediately and store it with
+              GenerationVersion, rules path, and other deterministic inputs. A seed by itself does not
+              preserve a graph across changed rules or node-type data.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Generation returns no graph</summary>
+          <div>
+            <ol>
+              <li>Call <code>ValidateRules</code> and inspect the returned error.</li>
+              <li>Inspect <code>LogMapGraph</code>.</li>
+              <li>Check whether each expanding row can be covered under <code>MaxFanOut</code>.</li>
+              <li>Check centered-column bounds; <code>0 / 0</code> is the unbounded compatibility mode.</li>
+              <li>Check quota counts, spacing, endpoint protection, and interactions between quotas.</li>
+              <li>Run Regression, then AssetSmoke against the production rules asset.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>A restored path is rejected</summary>
+          <div>
+            <p>
+              Confirm every node ID exists, every consecutive edge is present and unlocked, and the graph
+              was rebuilt with <code>BuildIndices</code>. A failed transactional restore intentionally
+              preserves the previous navigation state.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <p>
+          Support is available through the
+          <a href="https://discord.com/invite/GKjSWjvEnm">Dr Hippo's Dungeon Discord server</a>.
+          Include the Map Graph package version, Unreal Engine version, target platform, reproduction
+          steps, relevant rule settings, <code>LogMapGraph</code> output, and the
+          <code>MAPGRAPH_TEST_SUMMARY</code> line when reporting a reproducible issue.
+        </p>
+        <p>
+          Do not post confidential projects, proprietary source, credentials, access tokens, or customer
+          data publicly. A minimal clean-project reproduction is usually the fastest way to isolate an
+          integration issue.
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <p>
+      Map Graph 1.3.0 customer guide. Published by FunByDefault on GitHub.
+    </p>
+  </footer>
+</body>
+</html>
