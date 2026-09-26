@@ -552,7 +552,7 @@
     <nav aria-label="Guide contents">
       <strong>Contents</strong>
       <a href="#overview">What is included</a>
-      <a href="#quick-start">Five-minute start</a>
+      <a href="#quick-start">Editor and Blueprint setup</a>
       <a class="minor" href="#controls">Controls</a>
       <a class="minor" href="#random-seeds">Seeds and Random</a>
       <a href="#customize">Make it yours</a>
@@ -865,7 +865,7 @@
 
         <h3>Build a collection of examples</h3>
         <p><code>UMapGraphShowcaseWidget</code> adds a compact selector to <code>UMapGraphDemoWidget</code>.
-          Keyboard keys 1â€“5 select the included examples directly; Page Up / Page Down or gamepad
+          Keyboard keys 1 to 5 select the included examples directly; Page Up / Page Down or gamepad
           left / right shoulder cycle through them. Tap a numbered button on touch screens.
           D-pad or left stick inspect nodes, and the bottom face button enters a reachable node
           or returns from its destination. Touch supports marker taps, map swipes and destination buttons.
@@ -903,7 +903,7 @@
           <tr><td>Background artwork</td><td>Set <code>BackgroundBrush</code> to a texture or UI material. Set <code>BackgroundTint</code> to white to preserve its colors. Disable <code>bShowPaperDecoration</code> to remove the built-in frame and grain.</td></tr>
           <tr><td>Node artwork</td><td>The eight example <code>MGN_*</code> node types each have an editable <code>Icon</code> texture. Replace that texture to change a category's symbol; edit <code>Color</code> when <code>bUseNodeTypeColors</code> is enabled. For tag-specific art, set <code>IconBrush</code> in <code>NodeVisualsByTag</code>; the theme brush takes priority over the node type icon. <code>IconTint</code> tints either artwork source, with white preserving its original colors. Enable <code>bUseGlyphInsteadOfNodeIcon</code> to use the built-in vector glyph instead.</td></tr>
           <tr><td>Markers and routes</td><td>Edit <code>MarkerStyle</code>, <code>GlyphScale</code>, <code>NodeDiameter</code>, <code>RowSpacing</code>, <code>ColumnSpacing</code>, <code>NodeJitter</code>, route colors, thickness, dash length and gap. Choose <code>RouteShape = Straight</code> for direct links. <code>bAutoScaleNodes</code> shrinks drawings when rows or columns get close together. <code>MinimumHitDiameter</code> keeps touch targets large even with small symbols. <code>bAutoFitNodeLabels</code> keeps crowded vertical maps readable by placing the focused label beneath its node and hiding other labels that cannot fit.</td></tr>
-          <tr><td>Route shape and pattern</td><td><code>RouteShape</code> selects <code>Straight</code>, <code>Bezier</code> or <code>Orthogonal</code> (right angles). <code>OrthogonalLaneSpacing</code> separates overlapping right-angle routes and their node attachment points. It defaults to 14 Slate units and compresses to fit the row gap; zero restores shared midpoint bends. This changes drawing only, not graph connections. <code>Auto</code> preserves the original Curve Bend behavior. For BÃ©zier routes, adjust <code>BezierTension</code>, <code>CurveBend</code> and <code>CurveSegments</code>. <code>RoutePattern</code> chooses solid or dashed strokes; future, available, visited and locked patterns can override it separately. <code>Auto</code> keeps the original state patterns.</td></tr>
+          <tr><td>Route shape and pattern</td><td><code>RouteShape</code> selects <code>Straight</code>, <code>Bezier</code> or <code>Orthogonal</code> (right angles). <code>OrthogonalLaneSpacing</code> separates overlapping right-angle routes and their node attachment points. It defaults to 14 Slate units and compresses to fit the row gap; zero restores shared midpoint bends. This changes drawing only, not graph connections. <code>Auto</code> preserves the original Curve Bend behavior. For Bezier routes, adjust <code>BezierTension</code>, <code>CurveBend</code> and <code>CurveSegments</code>. <code>RoutePattern</code> chooses solid or dashed strokes; future, available, visited and locked patterns can override it separately. <code>Auto</code> keeps the original state patterns.</td></tr>
           <tr><td>Route artwork</td><td>Assign a texture or UI material to <code>PathBrush</code>. The route runs horizontally along the artwork's U direction; V covers its width. Transparent borders produce soft edges. <code>PathTextureRepeatLength</code> controls repeating in Slate units; zero stretches artwork along each line or dash. Optional <code>FuturePathBrush</code>, <code>AvailablePathBrush</code>, <code>VisitedPathBrush</code> and <code>LockedPathBrush</code> replace artwork per state. Empty overrides use the shared brush; an empty shared brush uses plain lines. State colors and brush tint multiply the artwork, so set them to white to retain the original texture colors. Brushes support an optional UV Region for atlas artwork; border/box margins and brush tiling are ignored because routes use ribbon geometry.</td></tr>
           <tr><td>Current-node arrow</td><td><code>bShowCurrentNodeIndicator</code> draws a down arrow above the current node, including horizontal maps. Edit <code>CurrentNodeIndicatorSize</code>, <code>CurrentNodeIndicatorColor</code>, <code>CurrentNodeIndicatorGap</code> and <code>CurrentNodeIndicatorOffset</code>. Assign <code>CurrentNodeIndicatorBrush</code> to replace the arrow with a texture or UI material. Its size and tint remain independent of the icon and ring.</td></tr>
           <tr><td>Fonts and panels</td><td>Choose <code>Font</code> and <code>TextScale</code>; edit <code>PanelColor</code> for the HUD, <code>LegendPanelColor</code> for the map key, plus <code>TextColor</code>, <code>MutedTextColor</code> and <code>HeadingColor</code>.</td></tr>
@@ -935,7 +935,7 @@
             <ul>
               <li><strong>Colors:</strong> backdrop, paper, ink, paths, current, reachable, focus, and error</li>
               <li><strong>Layout:</strong> direction, spacing, node size, minimum hit diameter, padding, jitter, and inspector width</li>
-              <li><strong>Routes:</strong> straight, BÃ©zier or right-angle geometry, solid/dashed state patterns, texture or UI material brushes, repeat length, widths, colors and outlines</li>
+              <li><strong>Routes:</strong> straight, Bezier or right-angle geometry, solid/dashed state patterns, texture or UI material brushes, repeat length, widths, colors and outlines</li>
               <li><strong>Current node:</strong> down-arrow visibility, artwork, size, color, gap and screen-space offset</li>
               <li><strong>Transitions and audio:</strong> selection hold, fade durations, hover, selection, travel and return cues</li>
               <li><strong>Typography:</strong> global text scale</li>
