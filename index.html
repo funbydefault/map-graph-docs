@@ -352,6 +352,10 @@
       font-weight: 850;
     }
 
+    figure.editor-capture { margin: 1.2rem 0; }
+    .editor-capture img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: .6rem; }
+    .editor-capture figcaption { margin-top: .5rem; color: var(--muted); font-size: .9rem; }
+
     .table-scroll { max-width: 100%; overflow-x: auto; }
 
     .review-callout { margin-top: 2rem; padding: 1.3rem; border: 1px solid #356391; border-radius: 1rem; background: #15253b; }
@@ -541,7 +545,7 @@
       <h1>Map Graph</h1>
       <p class="lede">
         Generate deterministic branching progression maps, present them through a polished
-        input-complete runtime screen, and keep game-specific encounters and consequences in your own code.
+        runtime screen for mouse, keyboard, gamepad and touch, and keep game-specific encounters and consequences in your own gameplay.
       </p>
       <div class="badges" aria-label="Package facts">
         <span class="badge gold">Package 1.3.0</span>
@@ -891,6 +895,23 @@
           <li>Assign <code>Rules</code> and <code>PresentationTheme</code> on your map widget. With the supplied GameMode, use <code>HarnessRules</code> and <code>HarnessPresentationTheme</code>.</li>
           <li>Open your gameplay from <code>OnNodeAdvanced</code> after travel commits. Use the included placeholder screen while connecting your game's room, battle or event flow.</li>
         </ol>
+        <h3>Find and change a style setting</h3>
+        <p>Open your <strong>MapGraphPresentationTheme</strong> asset. In <strong>Details</strong>,
+          search for a setting to find it quickly. Changes in <strong>Presentation &gt; Style</strong>
+          apply to widgets using that theme. Save the asset and play your level to inspect the result.</p>
+        <figure class="editor-capture">
+          <a href="images/routes-bezier.png"><img src="images/routes-bezier.png" width="1500" height="420" loading="lazy" alt="Unreal asset Editor Details, filtered to Route Shape, with Bezier selected under Presentation and Style."></a>
+          <figcaption><strong>Route Shape:</strong> choose straight, Bezier or right-angle paths. Click an image to read it at full size.</figcaption>
+        </figure>
+        <figure class="editor-capture">
+          <a href="images/nodes-after.png"><img src="images/nodes-after.png" width="1500" height="420" loading="lazy" alt="Unreal asset Editor Details, filtered to Node Diameter, showing a diameter of 112 Slate units."></a>
+          <figcaption><strong>Node Diameter:</strong> set the marker size. Auto Scale Nodes may reduce it when spacing is tight; Minimum Hit Diameter controls the input target separately.</figcaption>
+        </figure>
+        <figure class="editor-capture">
+          <a href="images/direction-horizontal.png"><img src="images/direction-horizontal.png" width="1500" height="420" loading="lazy" alt="Unreal asset Editor Details, filtered to Direction, with Left To Right selected."></a>
+          <figcaption><strong>Direction:</strong> switch the same graph between vertical and horizontal layouts. Enable Scroll To Fit Rows to retain row spacing and scroll along that direction.</figcaption>
+        </figure>
+
         <h3 id="theme">Presentation theme Data Asset</h3>
         <p>Create a <strong>MapGraphPresentationTheme</strong> Data Asset in your own Content folder.
           Open it and click <strong>Use Classic Preset</strong> or <strong>Use Parchment Preset</strong>
@@ -1742,7 +1763,7 @@ if (MapScreen)
         <h2>Support</h2>
         <p>
           Support is available through the
-          <a href="https://discord.com/invite/GKjSWjvEnm">Dr Hippo's Dungeon Discord server</a>.
+          <a href="https://discord.com/invite/GKjSWjvEnm">support Discord server</a>.
           Include the Map Graph package version, Unreal Engine version, target platform, reproduction
           steps, relevant rule settings, <code>LogMapGraph</code> output, and the
           <code>MAPGRAPH_TEST_SUMMARY</code> line when reporting a reproducible issue.

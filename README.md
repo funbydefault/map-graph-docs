@@ -12,6 +12,8 @@ migration and troubleshooting. This repository contains documentation only.
 
 Version 1.3.0 targets Unreal Engine 5.4 through 5.8 on Win64.
 
+[Try the free Windows demo](https://funbydefault.itch.io/map-graph-demo) · [Watch the showcase](https://www.youtube.com/watch?v=DP5JVF1WDXI)
+
 [Support](https://discord.com/invite/GKjSWjvEnm)
 
 > [!NOTE]
